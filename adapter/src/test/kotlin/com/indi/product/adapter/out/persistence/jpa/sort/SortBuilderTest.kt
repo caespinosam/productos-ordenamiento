@@ -16,7 +16,7 @@ class SortBuilderTest {
         fun should_ignore_metrics_given_weight_is_zero() {
             val builder = SortBuilder(Direction.DESC)
             builder.addMetric(SalesUnitMetric(0.0))
-            Assertions.assertThat(builder.buildSortStatement()).isEmpty()
+            Assertions.assertThat(builder.buildSortStatement()).isEqualTo("ORDER BY id DESC")
         }
 
         @Test
