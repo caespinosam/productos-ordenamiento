@@ -111,10 +111,12 @@ Esta capa corresponde a un submódulo Maven que depende del submódulo `model`.
 Contiene los adaptadores que interactuan con el mundo exterior para recibir o leer información. 
 
 
-Para este ejercicio dos adaptadores son usados:
+Para este ejercicio se usaron dos adaptadores:
 
 - `SearchProductsController`: Recibe los datos de ordenamiento via HTTP GET. Es un controlador REST de Spring.
 - `SearchProductsJPARepository`: Construye y ejecuta la sentencia SQL para leer los productos ordenados de acuerdo a los pesos enviados. Es un Repository de Spring que usa caching.
+
+Además, existe la clase auxiliar `SortBuilder`, la cual construye de manera dinámica el comando de ordenamiento SQL basado en las métricas y pesos recibidos.
 
 Esta capa corresponde a un módulo Maven que depende del módulo `application`.
 
@@ -211,3 +213,92 @@ curl -X 'GET' \
 #### Probar con Swagger OpenAPI
  
 Ingrese a la URL http://localhost:8080/swagger-ui/index.html en donde tendrá la posibilidad de probar el servicio REST usando una interfaz web.
+
+### Datos de salida
+
+El servicio REST genera un JSON que contiene la lista de productos paginados e información sobre la paginación actual:
+
+```
+
+{
+  "content": [
+    {
+      "id": 5,
+      "name": "CONTRASTING LACE T-SHIRT",
+      "salesUnit": 650,
+      "stock": {
+        "small": 0,
+        "medium": 1,
+        "large": 0
+      }
+    },
+    {
+      "id": 1,
+      "name": "V-NECH BASIC SHIRT",
+      "salesUnit": 100,
+      "stock": {
+        "small": 4,
+        "medium": 9,
+        "large": 0
+      }
+    },
+    {
+      "id": 3,
+      "name": "RAISED PRINT T-SHIRT",
+      "salesUnit": 80,
+      "stock": {
+        "small": 20,
+        "medium": 2,
+        "large": 20
+      }
+    },
+    {
+      "id": 2,
+      "name": "CONTRASTING FABRIC T-SHIRT",
+      "salesUnit": 50,
+      "stock": {
+        "small": 35,
+        "medium": 9,
+        "large": 9
+      }
+    },
+    {
+      "id": 6,
+      "name": "SLOGAN T-SHIRT",
+      "salesUnit": 20,
+      "stock": {
+        "small": 9,
+        "medium": 2,
+        "large": 5
+      }
+    },
+    {
+      "id": 4,
+      "name": "PLEATED T-SHIRT",
+      "salesUnit": 3,
+      "stock": {
+        "small": 25,
+        "medium": 30,
+        "large": 10
+      }
+    }
+  ],
+  "metrics": [
+    {
+      "weight": 0.2,
+      "name": "salesUnit"
+    },
+    {
+      "weight": 0,
+      "name": "stockRatio"
+    }
+  ],
+  "direction": "DESC",
+  "currentPage": 0,
+  "currentElements": 6,
+  "maxElementsPerPage": 20,
+  "totalElements": 6
+}
+
+
+```
