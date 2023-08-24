@@ -302,3 +302,7 @@ El servicio REST genera un JSON que contiene la lista de productos paginados e i
 
 
 ```
+
+## Agregar más productos a la Base datos en memoria
+
+Los productos son agregados automaticamente a la base de datos cuando se despliega la aplicación. Para agregar (o quitar) más productos, por favor modifique el archivo `./bootstrap/src/main/resources/data.sql`.
